@@ -4,3 +4,13 @@ include(CMakeFindDependencyMacro)
 find_dependency(CUDA)
 
 include("${CMAKE_CURRENT_LIST_DIR}/CudaSiftTargets.cmake")
+# Define legacy variables for compatibility
+if(NOT DEFINED CudaSift_INCLUDE_DIRS)
+	get_target_property(_CudaSift_include cudasift INTERFACE_INCLUDE_DIRECTORIES)
+	set(CudaSift_INCLUDE_DIRS "${_CudaSift_include}")
+endif()
+
+if(NOT DEFINED CudaSift_LIBRARIES)
+	get_target_property(_CudaSift_libs cudasift IMPORTED_SONAME_RELEASE)
+	set(CudaSift_LIBRARIES  "${_CudaSift_libs}")
+endif()
